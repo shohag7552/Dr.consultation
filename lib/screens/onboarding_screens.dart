@@ -34,7 +34,7 @@ class Onboardingscreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Andriod Application For\nDoctor Appoinment",
+                      "Android Application For\nDoctor Appointment",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,

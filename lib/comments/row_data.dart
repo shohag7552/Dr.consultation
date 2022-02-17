@@ -50,3 +50,46 @@ List<Map<String,dynamic>> doctorList = [
     'color': KBluecolor,
   },
 ];
+
+List<Map<String,dynamic>> schedulList = [
+  {
+    'title': "Consultation",
+    'time': "sunday . 9am - 11am",
+    'date': "12",
+    'month': "feb",
+    'color': KBluecolor,
+    'index': 0,
+  },
+  {
+    'title': "Consultation",
+    'time': "Monday . 9am - 11am",
+    'date': "13",
+    'month': "feb",
+    'color': KOrangecolor,
+    'index': 1,
+  },
+  {
+    'title': "Consultation",
+    'time': "Tuesday . 9am - 11am",
+    'date': "14",
+    'month': "feb",
+    'color': KYellowcolor,
+    'index': 2,
+  },
+  {
+    'title': "Consultation",
+    'time': "Wednesday . 9am - 11am",
+    'date': "15",
+    'month': "feb",
+    'color': KOrangecolor,
+    'index': 3,
+  },
+  {
+    'title': "Consultation",
+    'time': "Thursday . 9am - 11am",
+    'date': "16",
+    'month': "feb",
+    'color': KBluecolor,
+    'index': 4,
+  }
+];

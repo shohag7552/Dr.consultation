@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../comments/row_data.dart';
 import '../comments/schedule_card.dart';
+import '../utills/custom_snackbar.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   var _name;
   var _description;
   var _imageUrl;
 
   DetailScreen(this._name, this._description, this._imageUrl);
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  int? select;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +80,9 @@ class DetailScreen extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            flex:3,
+                            flex: 3,
                             child: Image.asset(
-                              _imageUrl,
+                              widget._imageUrl,
                               height: 120,
                             ),
                           ),
@@ -80,12 +90,12 @@ class DetailScreen extends StatelessWidget {
                             width: 20,
                           ),
                           Expanded(
-                            flex:7,
+                            flex: 7,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  _name,
+                                  widget._name,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -96,7 +106,7 @@ class DetailScreen extends StatelessWidget {
                                   height: 10,
                                 ),
                                 Text(
-                                  _description,
+                                  widget._description,
                                   style: TextStyle(
                                     color: KTitleTextcolor.withOpacity(0.7),
                                   ),
@@ -106,40 +116,39 @@ class DetailScreen extends StatelessWidget {
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: KBluecolor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: SvgPicture.asset(
-                                        "assets/icons/video.svg",
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 16,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: KYellowcolor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: SvgPicture.asset(
-                                        "assets/icons/video.svg",
+                                    InkWell(
+                                      onTap: () {
+                                        launch("tel:+8801393524");
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: KBluecolor.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child:
+                                            const Icon(Icons.phone, size: 22),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 16,
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: KOrangecolor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: SvgPicture.asset(
-                                        "assets/icons/video.svg",
+                                    InkWell(
+                                      onTap: () {
+                                        showCustomSnackBar(
+                                            "this feature will added soon",
+                                            context,
+                                            isError: true);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: KYellowcolor.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Icon(Icons.message, size: 22),
                                       ),
                                     ),
                                   ],
@@ -184,7 +193,83 @@ class DetailScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      ScheduleCard(
+                      ListView.builder(
+                          itemCount: schedulList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: InkWell(
+                                onTap: () {
+                                  select = schedulList[index]['index'];
+                                  setState(() {});
+                                  showCustomSnackBar('Your consultation fix on ${schedulList[index]['date']} ${schedulList[index]['month']} ${schedulList[index]['time'] }', context,isError: false);
+                                },
+                                /*child: ScheduleCard(bgcolor: schedulList[index]['color'],title: schedulList[index]['title'],
+                             description: schedulList[index]['time'],date: schedulList[index]['date'],month: schedulList[index]['month'],
+                            selectColor: select == schedulList[index]['index'] ? KSelectcolor : Kolor),*/
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: schedulList[index]['index'] == select ? Colors.green.shade200 : schedulList[index]['color'].withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: ListTile(
+                                      leading: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: schedulList[index]['color'].withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              schedulList[index]['date'],
+                                              style: TextStyle(
+                                                color: schedulList[index]['color'],
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              schedulList[index]['month'],
+                                              style: TextStyle(
+                                                color: schedulList[index]['color'],
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      title: Text(
+                                        schedulList[index]['title'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: KTitleTextcolor,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        schedulList[index]['time'],
+                                        style: TextStyle(
+                                          color:
+                                              KTitleTextcolor.withOpacity(0.7),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                      /*ScheduleCard(
                         "Consultation",
                         "sunday . 9am - 11am",
                         "12",
@@ -230,7 +315,7 @@ class DetailScreen extends StatelessWidget {
                         "16",
                         "feb",
                         KOrangecolor,
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

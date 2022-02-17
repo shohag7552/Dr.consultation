@@ -12,3 +12,5 @@ var KSearchBackgroundcolor = const Color(0xffF2F2F2);
 var KSearchTextcolor = const Color(0xffC0C0C0);
 var KCatagoryTextcolor = const Color(0xff292685);
 var KGreencolor = const Color(0xff292685);
+var KSelectcolor = const Color(0xff292612);
+var Kolor = const Color(0xfffffff);

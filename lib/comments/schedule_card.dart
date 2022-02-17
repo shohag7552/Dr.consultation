@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/constant.dart';
 
 class ScheduleCard extends StatelessWidget {
-  var _title;
-  var _description;
-  var _date;
-  var _month;
-  var _bgcolor;
+  var title;
+  var description;
+  var date;
+  var month;
+  var bgcolor;
+  var selectColor;
 
-  ScheduleCard(
-      this._title, this._description, this._date, this._month, this._bgcolor);
+
+  ScheduleCard({this.title, this.description, this.date, this.month, this.bgcolor,this.selectColor});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: _bgcolor.withOpacity(0.1),
+        color: bgcolor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -28,24 +29,24 @@ class ScheduleCard extends StatelessWidget {
               horizontal: 16,
             ),
             decoration: BoxDecoration(
-              color: _bgcolor.withOpacity(0.3),
+              color: selectColor ?? bgcolor.withOpacity(0.3),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  _date,
+                  date,
                   style: TextStyle(
-                    color: _bgcolor,
+                    color: bgcolor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  _month,
+                  month,
                   style: TextStyle(
-                    color: _bgcolor,
+                    color: bgcolor,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -54,14 +55,14 @@ class ScheduleCard extends StatelessWidget {
             ),
           ),
           title: Text(
-            _title,
+            title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: KTitleTextcolor,
             ),
           ),
           subtitle: Text(
-            _description,
+            description,
             style: TextStyle(
               color: KTitleTextcolor.withOpacity(0.7),
             ),
